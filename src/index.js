@@ -1,23 +1,40 @@
 const fetch = require('node-fetch');
 
-// const orderTypes = {
-//   Delivery: 'Delivery',
+// Const
+// usar emojis en mac cmd + ctrl + espacio 💩
 
-// };
-async function obtenerTiendaCercaDir(CodigoRegion, NombreCalle, CalleNumero, Ciudad) {
-  const response = await fetch(`https://order.golo01.dominos.com/store-locator-international/locate/store?regionCode=${CodigoRegion}&type=Delivery&Street=${NombreCalle}%${CalleNumero}&StreetName=${NombreCalle}&Name=&StreetNumber=${CalleNumero}&StreetAddress2=&StreetField1=&StreetField2=&StreetRange=&PlaceType=&Type=Delivery&AddressLine1=&AddressLine2=&AddressLine3=&AddressLine4=&UnitNumber=&UnitType=House&PropertyType=&PropertyNumber=&Neighborhood=&SubNeighborhood=&City=${Ciudad}&Region=${CodigoRegion}&PostalCode=&DeliveryInstructions=&CampusID=&BuildingID=&IsDefault=false&UpdateTime=&Coordinates=%5Bobject%20Object%5D&SectorName=&streetAddress1=${NombreCalle}%${CalleNumero}&AddressType=House&g=1`, {
-    credentials: 'include',
+const API_URL = 'https://order.golo01.dominos.com';
+const Mercado = 'COLOMBIA';
+
+async function obtenerTiendaCercaDir(CodigoRegion, Delivery = 'Delivery', NombreCalle, CalleNumero = ' ', Ciudad = ' ') {
+  const response = await fetch(`${API_URL}/store-locator-international/locate/store?regionCode=${CodigoRegion}&type=${Delivery}&Street=${NombreCalle}${CalleNumero}&StreetName=${NombreCalle}&Name=&StreetNumber=${CalleNumero}&City=${Ciudad}&Region=${CodigoRegion}&streetAddress1=${NombreCalle}${CalleNumero}&g=1`, {
     headers: {
       Accept: 'application/vnd.com.dominos.ecommerce.store-locator.response+json;version=1.2',
-      'Accept-Language': 'es-ES,es;q=0.8,en-US;q=0.5,en;q=0.3',
-      Market: 'COLOMBIA',
-      'DPZ-Language': 'es',
-      'DPZ-Market': 'COLOMBIA',
-      'X-DPZ-D': '8922a655-0193-4e87-a56a-dcdfec791b4e',
+      Market: `${Mercado}`,
+      'DPZ-Market': `${Mercado}`,
     },
-
   });
-  const json = await response.json();
-  console.log(json);
+
+  return response.json();
 }
-obtenerTiendaCercaDir('MAG','Carrera 17 27 ','2 ','Rodadero');
+
+async function obtenerTiendaInfo(storeID) {
+  const response = await fetch(`${API_URL}/power/store/${storeID}/profile`, {
+    headers: {
+      Accept: 'application/json, text/javascript, */*; q=0.01',
+      Market: `${Mercado}`,
+      'DPZ-Market': `${Mercado}`,
+    },
+  });
+  return response.json();
+}
+
+// obtenerTiendaCercaDir('MAG', ' ', 'Carrera 17 27', '2', 'Rodadero')
+//   .then((json) => {
+//     console.log(json.Stores[0]);
+//   });
+
+obtenerTiendaInfo('17198')
+  .then((infoTienda) => {
+    console.log(infoTienda);
+  });
