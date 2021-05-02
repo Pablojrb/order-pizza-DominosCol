@@ -1,7 +1,5 @@
 const fetch = require('node-fetch');
 
-// Const
-// usar emojis en mac cmd + ctrl + espacio 💩
 
 const API_URL = 'https://order.golo01.dominos.com';
 const Mercado = 'COLOMBIA';
