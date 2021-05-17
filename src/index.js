@@ -67,18 +67,20 @@ async function obtenerTiendaCercaDelivery(CodigoRegion, tipoOrden, NombreCalle, 
 //     console.log(json);
 //   });
 
-obtenerTiendaCercaDir('MAG', ' ', 'Calle 17 20 ', ' ', ' Rodadero')
-  .then((json) => {
-    console.log(json.Stores[0]);
-    // console.log(json);
-  });
+// obtenerTiendaCercaDir('MAG', ' ', 'Calle 17 20 ', ' ', 'Rodadero')
+//   .then((json) => {
+//     console.log(json.Stores[0]);
+//     // console.log(json);
+//   });
 
 // obtenerTiendaMenu('17198')
 //   .then((json) => {
+//     // eslint-disable-next-line no-console
 //     console.log(json);
 //   });
 
-// obtenerTiendaInfo('17198')
-//   .then((infoTienda) => {
-//     console.log(infoTienda);
-//   });
+obtenerTiendaInfo('17198')
+  .then((infoTienda) => {
+    // eslint-disable-next-line no-console
+    console.log(infoTienda);
+  });
